@@ -49,34 +49,7 @@ public class OpenApiConfig {
 
 
 
-ComplianceThresholdRepository.java
 
-package com.example.demo.repository;
-
-import com.example.demo.entity.ComplianceThreshold;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-import java.util.Optional;
-
-@Repository
-public interface ComplianceThresholdRepository extends JpaRepository<ComplianceThreshold, Long> {
-    Optional<ComplianceThreshold> findBySensorType(String type);
-}
-LocationRepository.java
-
-package com.example.demo.repository;
-
-import com.example.demo.entity.Location;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-import java.util.List;
-import java.util.Optional;
-
-@Repository
-public interface LocationRepository extends JpaRepository<Location, Long> {
-    Optional<Location> findByLocationName(String name);
-    List<Location> findByRegion(String region);
-}
 
 SensorReadingRepository.java
 
