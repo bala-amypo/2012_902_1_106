@@ -51,53 +51,9 @@ public class OpenApiConfig {
 
 
 
-SensorReadingRepository.java
-
-package com.example.demo.repository;
-
-import com.example.demo.entity.SensorReading;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-import java.time.LocalDateTime;
-import java.util.List;
-
-@Repository
-public interface SensorReadingRepository extends JpaRepository<SensorReading, Long> {
-    List<SensorReading> findBySensor_Id(Long id);
-    List<SensorReading> findBySensor_IdAndReadingTimeBetween(Long id, LocalDateTime start, LocalDateTime end);
-}
-
-SensorRepository.java
 
 
-package com.example.demo.repository;
 
-import com.example.demo.entity.Sensor;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-import java.util.List;
-import java.util.Optional;
-
-@Repository
-public interface SensorRepository extends JpaRepository<Sensor, Long> {
-    Optional<Sensor> findBySensorCode(String code);
-    List<Sensor> findByLocation_Region(String region);
-}
-
-
-UserRepository.java
-
-package com.example.demo.repository;
-
-import com.example.demo.entity.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-import java.util.Optional;
-
-@Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User> findByEmail(String email);
-}
 
 
 >security
