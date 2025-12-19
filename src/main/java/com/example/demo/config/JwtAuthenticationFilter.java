@@ -1,7 +1,3 @@
->Demo
->Config
-
-JwtAuthenticationFilter.java
 
 package com.example.demo.config;
 
