@@ -1,6 +1,3 @@
-
-
-OpenApiConfig.java
 package com.example.demo.config;
 
 import io.swagger.v3.oas.models.Components;
@@ -30,30 +27,3 @@ public class OpenApiConfig {
                                         .bearerFormat("JWT")));
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
->service
-DemoApplication.java
-
-package com.example.demo;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-@SpringBootApplication
-public class DemoApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
-    }
-}
-
