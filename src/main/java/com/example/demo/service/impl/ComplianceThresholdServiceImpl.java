@@ -18,7 +18,7 @@ public class ComplianceThresholdServiceImpl implements ComplianceThresholdServic
     @Override
     public ComplianceThreshold createThreshold(ComplianceThreshold threshold) {
         if (threshold.getMinValue() >= threshold.getMaxValue()) {
-            throw new IllegalArgumentException("minvalue");
+            throw new IllegalArgumentException("minvalue must be less than maxValue");
         }
         return thresholdRepository.save(threshold);
     }

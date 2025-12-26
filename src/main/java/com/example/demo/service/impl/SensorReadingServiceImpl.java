@@ -12,11 +12,11 @@ import java.util.List;
 
 @Service
 public class SensorReadingServiceImpl implements SensorReadingService {
-    private final SensorReadingRepository sensorReadingRepository;
+    private final SensorReadingRepository readingRepository;
     private final SensorRepository sensorRepository;
 
-    public SensorReadingServiceImpl(SensorReadingRepository sensorReadingRepository, SensorRepository sensorRepository) {
-        this.sensorReadingRepository = sensorReadingRepository;
+    public SensorReadingServiceImpl(SensorReadingRepository readingRepository, SensorRepository sensorRepository) {
+        this.readingRepository = readingRepository;
         this.sensorRepository = sensorRepository;
     }
 
@@ -25,8 +25,8 @@ public class SensorReadingServiceImpl implements SensorReadingService {
         Sensor sensor = sensorRepository.findById(sensorId)
                 .orElseThrow(() -> new ResourceNotFoundException("Sensor not found"));
         
-        if (reading.getReadingValue() == null) {
-            throw new IllegalArgumentException("readingvalue required");
+        if (reading.getReadingValue() == null || reading.getReadingValue() == 0) {
+            throw new IllegalArgumentException("readingvalue is required");
         }
         
         if (reading.getReadingTime() != null && reading.getReadingTime().isAfter(LocalDateTime.now())) {
@@ -35,17 +35,17 @@ public class SensorReadingServiceImpl implements SensorReadingService {
         
         reading.setSensor(sensor);
         reading.setStatus("PENDING");
-        return sensorReadingRepository.save(reading);
+        return readingRepository.save(reading);
     }
 
     @Override
     public SensorReading getReading(Long id) {
-        return sensorReadingRepository.findById(id)
+        return readingRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Reading not found"));
     }
 
     @Override
     public List<SensorReading> getReadingsBySensor(Long sensorId) {
-        return sensorReadingRepository.findBySensor_Id(sensorId);
+        return readingRepository.findBySensor_Id(sensorId);
     }
 }
