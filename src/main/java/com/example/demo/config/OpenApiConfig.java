@@ -1,6 +1,5 @@
 package com.example.demo.config;
 
-import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
@@ -16,10 +15,10 @@ public class OpenApiConfig {
         return new OpenAPI()
                 .info(new Info()
                         .title("Water Quality Compliance Monitoring API")
-                        .description("A Spring Boot REST API for monitoring water quality compliance with JWT authentication")
+                        .description("API for monitoring water quality sensor readings and compliance")
                         .version("1.0.0"))
                 .addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
-                .components(new Components()
+                .components(new io.swagger.v3.oas.models.Components()
                         .addSecuritySchemes("Bearer Authentication",
                                 new SecurityScheme()
                                         .type(SecurityScheme.Type.HTTP)
