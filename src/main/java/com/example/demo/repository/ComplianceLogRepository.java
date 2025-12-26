@@ -1,4 +1,3 @@
-
 package com.example.demo.repository;
 
 import com.example.demo.entity.ComplianceLog;
@@ -10,4 +9,3 @@ import java.util.List;
 public interface ComplianceLogRepository extends JpaRepository<ComplianceLog, Long> {
     List<ComplianceLog> findBySensorReading_Id(Long id);
 }
-
