@@ -25,8 +25,8 @@ public class SensorReadingServiceImpl implements SensorReadingService {
         Sensor sensor = sensorRepository.findById(sensorId)
                 .orElseThrow(() -> new ResourceNotFoundException("Sensor not found"));
         
-        if (reading.getReadingValue() == null || reading.getReadingValue() == 0) {
-            throw new IllegalArgumentException("readingvalue");
+        if (reading.getReadingValue() == null) {
+            throw new IllegalArgumentException("readingvalue required");
         }
         
         if (reading.getReadingTime() != null && reading.getReadingTime().isAfter(LocalDateTime.now())) {

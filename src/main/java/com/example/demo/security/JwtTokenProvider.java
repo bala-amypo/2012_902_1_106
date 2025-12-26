@@ -1,5 +1,3 @@
-
-
 package com.example.demo.security;
 
 import io.jsonwebtoken.*;
@@ -22,12 +20,16 @@ public class JwtTokenProvider {
         this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
+    public String generateToken(Long userId, String email, com.example.demo.entity.Role role) {
+        return generateToken(userId, email, role.name());
+    }
+
     public String generateToken(Long userId, String email, String role) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expirationMillis);
 
         return Jwts.builder()
-                .setSubject(email)
+                .setSubject(String.valueOf(userId))
                 .claim("userId", userId)
                 .claim("email", email)
                 .claim("role", role)
@@ -37,7 +39,19 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public Claims validateToken(String token) {
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token);
+            return true;
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
+        }
+    }
+
+    public Claims getClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
@@ -46,14 +60,14 @@ public class JwtTokenProvider {
     }
 
     public String extractEmail(String token) {
-        return validateToken(token).get("email", String.class);
+        return getClaims(token).get("email", String.class);
     }
 
     public Long extractUserId(String token) {
-        return validateToken(token).get("userId", Long.class);
+        return getClaims(token).get("userId", Long.class);
     }
 
     public String extractRole(String token) {
-        return validateToken(token).get("role", String.class);
+        return getClaims(token).get("role", String.class);
     }
 }
