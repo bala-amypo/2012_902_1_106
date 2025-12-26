@@ -1,4 +1,4 @@
-package com.example.demo.security;
+/* package com.example.demo.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -70,4 +70,4 @@ public class JwtTokenProvider {
     public String extractRole(String token) {
         return getClaims(token).get("role", String.class);
     }
-}
+} */

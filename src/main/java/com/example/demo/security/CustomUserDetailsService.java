@@ -1,4 +1,4 @@
-package com.example.demo.security;
+/* package com.example.demo.security;
 
 import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
@@ -28,4 +28,4 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .authorities(Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole())))
                 .build();
     }
-}
+} */
