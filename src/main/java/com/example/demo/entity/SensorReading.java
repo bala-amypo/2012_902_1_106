@@ -3,7 +3,6 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "sensor_readings")
@@ -12,20 +11,18 @@ public class SensorReading {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "sensor_id", nullable = false)
     private Sensor sensor;
 
     @Column(nullable = false)
     private Double readingValue;
 
-    @Column(nullable = false)
-    private LocalDateTime readingTime;
+    private LocalDateTime readingTime = LocalDateTime.now();
 
-    @Column(nullable = false)
     private String status = "PENDING";
 
-    @OneToMany(mappedBy = "sensorReading", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "sensorReading", cascade = CascadeType.ALL)
     private List<ComplianceLog> complianceLogs;
 
     public SensorReading() {}
@@ -34,9 +31,10 @@ public class SensorReading {
         this.sensor = sensor;
         this.readingValue = readingValue;
         this.readingTime = readingTime;
-        this.status = status != null ? status : "PENDING";
+        this.status = status;
     }
 
+    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -54,17 +52,4 @@ public class SensorReading {
 
     public List<ComplianceLog> getComplianceLogs() { return complianceLogs; }
     public void setComplianceLogs(List<ComplianceLog> complianceLogs) { this.complianceLogs = complianceLogs; }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        SensorReading that = (SensorReading) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

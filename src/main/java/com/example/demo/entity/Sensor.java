@@ -3,7 +3,6 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "sensors")
@@ -18,16 +17,15 @@ public class Sensor {
     @Column(nullable = false)
     private String sensorType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "location_id", nullable = false)
     private Location location;
 
-    private LocalDateTime installedAt;
+    private LocalDateTime installedAt = LocalDateTime.now();
 
-    @Column(nullable = false)
     private Boolean isActive = true;
 
-    @OneToMany(mappedBy = "sensor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "sensor", cascade = CascadeType.ALL)
     private List<SensorReading> readings;
 
     public Sensor() {}
@@ -37,9 +35,10 @@ public class Sensor {
         this.sensorType = sensorType;
         this.location = location;
         this.installedAt = installedAt;
-        this.isActive = isActive != null ? isActive : true;
+        this.isActive = isActive;
     }
 
+    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -60,17 +59,4 @@ public class Sensor {
 
     public List<SensorReading> getReadings() { return readings; }
     public void setReadings(List<SensorReading> readings) { this.readings = readings; }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Sensor sensor = (Sensor) o;
-        return Objects.equals(id, sensor.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

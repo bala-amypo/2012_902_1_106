@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Sensor;
-import com.example.demo.service.SensorService;
+import com.example.demo.entity.Location;
+import com.example.demo.service.LocationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -10,34 +10,33 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/sensors")
-@Tag(name = "Sensors", description = "Sensor management endpoints")
-public class SensorController {
-    private final SensorService sensorService;
+@RequestMapping("/api/locations")
+@Tag(name = "Locations", description = "Location management endpoints")
+public class LocationController {
+    private final LocationService locationService;
 
-    public SensorController(SensorService sensorService) {
-        this.sensorService = sensorService;
+    public LocationController(LocationService locationService) {
+        this.locationService = locationService;
     }
 
-    @PostMapping("/{locationId}")
-    @Operation(summary = "Create sensor", description = "Create a new sensor at a specific location")
-    public ResponseEntity<Sensor> createSensor(@Parameter(description = "Location ID") @PathVariable Long locationId, 
-                                             @RequestBody Sensor sensor) {
-        Sensor savedSensor = sensorService.createSensor(locationId, sensor);
-        return ResponseEntity.ok(savedSensor);
+    @PostMapping
+    @Operation(summary = "Create location", description = "Create a new monitoring location")
+    public ResponseEntity<Location> createLocation(@RequestBody Location location) {
+        Location created = locationService.createLocation(location);
+        return ResponseEntity.ok(created);
     }
 
     @GetMapping
-    @Operation(summary = "Get all sensors", description = "Retrieve all sensors")
-    public ResponseEntity<List<Sensor>> getAllSensors() {
-        List<Sensor> sensors = sensorService.getAllSensors();
-        return ResponseEntity.ok(sensors);
+    @Operation(summary = "Get all locations", description = "Retrieve all monitoring locations")
+    public ResponseEntity<List<Location>> getAllLocations() {
+        List<Location> locations = locationService.getAllLocations();
+        return ResponseEntity.ok(locations);
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Get sensor by ID", description = "Retrieve a specific sensor by its ID")
-    public ResponseEntity<Sensor> getSensor(@Parameter(description = "Sensor ID") @PathVariable Long id) {
-        Sensor sensor = sensorService.getSensor(id);
-        return ResponseEntity.ok(sensor);
+    @Operation(summary = "Get location by ID", description = "Retrieve a specific location by ID")
+    public ResponseEntity<Location> getLocation(@Parameter(description = "Location ID") @PathVariable Long id) {
+        Location location = locationService.getLocation(id);
+        return ResponseEntity.ok(location);
     }
 }

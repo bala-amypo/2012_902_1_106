@@ -2,7 +2,6 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Entity
 @Table(name = "compliance_logs")
@@ -11,11 +10,11 @@ public class ComplianceLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "sensor_reading_id", nullable = false)
     private SensorReading sensorReading;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "threshold_id", nullable = false)
     private ComplianceThreshold thresholdUsed;
 
@@ -24,8 +23,7 @@ public class ComplianceLog {
 
     private String remarks;
 
-    @Column(nullable = false)
-    private LocalDateTime loggedAt;
+    private LocalDateTime loggedAt = LocalDateTime.now();
 
     public ComplianceLog() {}
 
@@ -37,6 +35,7 @@ public class ComplianceLog {
         this.loggedAt = loggedAt;
     }
 
+    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -54,17 +53,4 @@ public class ComplianceLog {
 
     public LocalDateTime getLoggedAt() { return loggedAt; }
     public void setLoggedAt(LocalDateTime loggedAt) { this.loggedAt = loggedAt; }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ComplianceLog that = (ComplianceLog) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

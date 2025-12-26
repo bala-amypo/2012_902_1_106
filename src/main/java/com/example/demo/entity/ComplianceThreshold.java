@@ -2,8 +2,6 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "compliance_thresholds")
@@ -24,10 +22,7 @@ public class ComplianceThreshold {
     @Column(nullable = false)
     private String severityLevel;
 
-    private LocalDateTime createdAt;
-
-    @OneToMany(mappedBy = "thresholdUsed", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ComplianceLog> complianceLogs;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public ComplianceThreshold() {}
 
@@ -39,6 +34,7 @@ public class ComplianceThreshold {
         this.createdAt = createdAt;
     }
 
+    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -56,20 +52,4 @@ public class ComplianceThreshold {
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
-
-    public List<ComplianceLog> getComplianceLogs() { return complianceLogs; }
-    public void setComplianceLogs(List<ComplianceLog> complianceLogs) { this.complianceLogs = complianceLogs; }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ComplianceThreshold that = (ComplianceThreshold) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

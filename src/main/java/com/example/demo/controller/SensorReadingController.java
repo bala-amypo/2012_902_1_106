@@ -13,31 +13,31 @@ import java.util.List;
 @RequestMapping("/api/readings")
 @Tag(name = "Sensor Readings", description = "Sensor reading management endpoints")
 public class SensorReadingController {
-    private final SensorReadingService sensorReadingService;
+    private final SensorReadingService readingService;
 
-    public SensorReadingController(SensorReadingService sensorReadingService) {
-        this.sensorReadingService = sensorReadingService;
+    public SensorReadingController(SensorReadingService readingService) {
+        this.readingService = readingService;
     }
 
     @PostMapping("/{sensorId}")
     @Operation(summary = "Submit reading", description = "Submit a new sensor reading")
-    public ResponseEntity<SensorReading> submitReading(@Parameter(description = "Sensor ID") @PathVariable Long sensorId, 
-                                                      @RequestBody SensorReading reading) {
-        SensorReading savedReading = sensorReadingService.submitReading(sensorId, reading);
-        return ResponseEntity.ok(savedReading);
+    public ResponseEntity<SensorReading> submitReading(@Parameter(description = "Sensor ID") @PathVariable Long sensorId,
+                                                     @RequestBody SensorReading reading) {
+        SensorReading created = readingService.submitReading(sensorId, reading);
+        return ResponseEntity.ok(created);
     }
 
     @GetMapping("/sensor/{sensorId}")
     @Operation(summary = "Get readings by sensor", description = "Retrieve all readings for a specific sensor")
     public ResponseEntity<List<SensorReading>> getReadingsBySensor(@Parameter(description = "Sensor ID") @PathVariable Long sensorId) {
-        List<SensorReading> readings = sensorReadingService.getReadingsBySensor(sensorId);
+        List<SensorReading> readings = readingService.getReadingsBySensor(sensorId);
         return ResponseEntity.ok(readings);
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Get reading by ID", description = "Retrieve a specific reading by its ID")
+    @Operation(summary = "Get reading by ID", description = "Retrieve a specific reading by ID")
     public ResponseEntity<SensorReading> getReading(@Parameter(description = "Reading ID") @PathVariable Long id) {
-        SensorReading reading = sensorReadingService.getReading(id);
+        SensorReading reading = readingService.getReading(id);
         return ResponseEntity.ok(reading);
     }
 }
