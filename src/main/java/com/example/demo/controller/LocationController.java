@@ -22,8 +22,8 @@ public class LocationController {
     @PostMapping
     @Operation(summary = "Create location", description = "Create a new monitoring location")
     public ResponseEntity<Location> createLocation(@RequestBody Location location) {
-        Location savedLocation = locationService.createLocation(location);
-        return ResponseEntity.ok(savedLocation);
+        Location created = locationService.createLocation(location);
+        return ResponseEntity.ok(created);
     }
 
     @GetMapping
@@ -34,7 +34,7 @@ public class LocationController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Get location by ID", description = "Retrieve a specific location by its ID")
+    @Operation(summary = "Get location by ID", description = "Retrieve a specific location by ID")
     public ResponseEntity<Location> getLocation(@Parameter(description = "Location ID") @PathVariable Long id) {
         Location location = locationService.getLocation(id);
         return ResponseEntity.ok(location);

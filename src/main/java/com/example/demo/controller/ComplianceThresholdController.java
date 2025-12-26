@@ -22,8 +22,8 @@ public class ComplianceThresholdController {
     @PostMapping
     @Operation(summary = "Create threshold", description = "Create a new compliance threshold")
     public ResponseEntity<ComplianceThreshold> createThreshold(@RequestBody ComplianceThreshold threshold) {
-        ComplianceThreshold savedThreshold = thresholdService.createThreshold(threshold);
-        return ResponseEntity.ok(savedThreshold);
+        ComplianceThreshold created = thresholdService.createThreshold(threshold);
+        return ResponseEntity.ok(created);
     }
 
     @GetMapping
@@ -34,7 +34,7 @@ public class ComplianceThresholdController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Get threshold by ID", description = "Retrieve a specific threshold by its ID")
+    @Operation(summary = "Get threshold by ID", description = "Retrieve a specific threshold by ID")
     public ResponseEntity<ComplianceThreshold> getThreshold(@Parameter(description = "Threshold ID") @PathVariable Long id) {
         ComplianceThreshold threshold = thresholdService.getThreshold(id);
         return ResponseEntity.ok(threshold);
