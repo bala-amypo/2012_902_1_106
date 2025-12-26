@@ -1,43 +1,29 @@
-package com.example.demo.controller;
+package com.example.demo.dto;
 
-import com.example.demo.entity.SensorReading;
-import com.example.demo.service.SensorReadingService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import java.util.List;
+public class ApiResponse {
+    private boolean success;
+    private String message;
+    private Object data;
 
-@RestController
-@RequestMapping("/api/readings")
-@Tag(name = "Sensor Readings", description = "Sensor reading management endpoints")
-public class SensorReadingController {
-    private final SensorReadingService sensorReadingService;
+    public ApiResponse() {}
 
-    public SensorReadingController(SensorReadingService sensorReadingService) {
-        this.sensorReadingService = sensorReadingService;
+    public ApiResponse(boolean success, String message) {
+        this.success = success;
+        this.message = message;
     }
 
-    @PostMapping("/{sensorId}")
-    @Operation(summary = "Submit reading", description = "Submit a new sensor reading")
-    public ResponseEntity<SensorReading> submitReading(@Parameter(description = "Sensor ID") @PathVariable Long sensorId, 
-                                                      @RequestBody SensorReading reading) {
-        SensorReading savedReading = sensorReadingService.submitReading(sensorId, reading);
-        return ResponseEntity.ok(savedReading);
+    public ApiResponse(boolean success, String message, Object data) {
+        this.success = success;
+        this.message = message;
+        this.data = data;
     }
 
-    @GetMapping("/sensor/{sensorId}")
-    @Operation(summary = "Get readings by sensor", description = "Retrieve all readings for a specific sensor")
-    public ResponseEntity<List<SensorReading>> getReadingsBySensor(@Parameter(description = "Sensor ID") @PathVariable Long sensorId) {
-        List<SensorReading> readings = sensorReadingService.getReadingsBySensor(sensorId);
-        return ResponseEntity.ok(readings);
-    }
+    public boolean isSuccess() { return success; }
+    public void setSuccess(boolean success) { this.success = success; }
 
-    @GetMapping("/{id}")
-    @Operation(summary = "Get reading by ID", description = "Retrieve a specific reading by its ID")
-    public ResponseEntity<SensorReading> getReading(@Parameter(description = "Reading ID") @PathVariable Long id) {
-        SensorReading reading = sensorReadingService.getReading(id);
-        return ResponseEntity.ok(reading);
-    }
+    public String getMessage() { return message; }
+    public void setMessage(String message) { this.message = message; }
+
+    public Object getData() { return data; }
+    public void setData(Object data) { this.data = data; }
 }
